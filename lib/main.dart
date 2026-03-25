@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Fun Signup App',
       theme: ThemeData(primarySwatch: Colors.purple),
       home: const SignupPage(),
@@ -23,6 +24,25 @@ class SignupPage extends StatefulWidget {
 
   @override
   State<SignupPage> createState() => _SignupPageState();
+}
+
+class WelcomeScreen extends StatelessWidget {
+  final String name;
+
+  const WelcomeScreen({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Welcome')),
+      body: Center(
+        child: Text(
+          'Welcome, $name!',
+          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
 }
 
 class _SignupPageState extends State<SignupPage> {
@@ -115,16 +135,19 @@ class _SignupPageState extends State<SignupPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Welcome! Account created successfully.'),
-                        backgroundColor: Colors.green,
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WelcomeScreen(
+                          name: _nameController.text,
+                        ),
                       ),
                     );
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple,
+
+                                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 228, 190, 245),
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 ),
                 child: const Text(
