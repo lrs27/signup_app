@@ -53,6 +53,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,11 +104,17 @@ class _SignupPageState extends State<SignupPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
                   }
-                  if (!value.contains('@')) {
-                    return 'Please enter a valid email';
+
+                  // Must contain @, domain, and end with .com
+                  final emailRegex = RegExp(r'^[\w\.-]+@[\w\.-]+\.com$');
+
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'Please enter a valid .com email address(e.g: daverogers@domain.com)';
                   }
+
                   return null;
-                },
+                }
+
               ),
               const SizedBox(height: 16),
               
@@ -129,8 +137,30 @@ class _SignupPageState extends State<SignupPage> {
                   return null;
                 },
               ),
+
+              //Confirm Password Field
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _confirmPasswordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Confirm Password',
+                  prefixIcon: Icon(Icons.lock_outline),
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please confirm your password';
+                  }
+                  if (value != _passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
+              ),
+
+          
               const SizedBox(height: 24),
-              
               // 🚀 Sign Up Button
               ElevatedButton(
                 onPressed: () {
@@ -146,7 +176,7 @@ class _SignupPageState extends State<SignupPage> {
                   }
                 },
 
-                                style: ElevatedButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 228, 190, 245),
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 ),
