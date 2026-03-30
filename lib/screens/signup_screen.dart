@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'welcome_screen.dart';
+import 'success_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -184,10 +184,11 @@ class _SignupScreenState extends State<SignupScreen> {
 
                           setState(() => _isLoading = false);
 
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const WelcomeScreen(),
+                              builder: (context) =>
+                                  SuccessScreen(userName: _nameController.text),
                             ),
                           );
                         }
