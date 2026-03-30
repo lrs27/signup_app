@@ -33,7 +33,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
     return Scaffold(
       backgroundColor: Colors.purple.shade50,
       body: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.center, // Ensures perfect centering
         children: [
           // 🎊 Confetti Blast
           ConfettiWidget(
@@ -48,44 +48,46 @@ class _SuccessScreenState extends State<SuccessScreen> {
             ],
           ),
 
-          // 🎉 Success Content
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Welcome, ${widget.userName}!",
-                style: const TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.purple,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 16),
-
-              const Text(
-                "Your account has been created successfully.",
-                style: TextStyle(fontSize: 18, color: Colors.black54),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 40),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 14,
+          // 🎉 Centered Success Content
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Prevents stretching
+              children: [
+                Text(
+                  "Welcome, ${widget.userName}!",
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.purple,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                child: const Text("Continue", style: TextStyle(fontSize: 20)),
-              ),
-            ],
+
+                const SizedBox(height: 16),
+
+                const Text(
+                  "Your account has been created successfully.",
+                  style: TextStyle(fontSize: 18, color: Colors.black54),
+                  textAlign: TextAlign.center,
+                ),
+
+                const SizedBox(height: 40),
+
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 240, 187, 250),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 14,
+                    ),
+                  ),
+                  child: const Text("Continue", style: TextStyle(fontSize: 20)),
+                ),
+              ],
+            ),
           ),
         ],
       ),
